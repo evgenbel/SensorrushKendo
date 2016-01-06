@@ -21,7 +21,7 @@ function createChart(chart) {
         autoBind: true,
         transitions: true,
         title: {
-            text: "Humidity"
+            text: $(chart).attr('title')
         },
         legend: {
             position: "top"
@@ -30,8 +30,8 @@ function createChart(chart) {
             type: "line"
         },
         series: [{
-            field: "Humidity",
-            name: "Humidity"
+            field: $(chart).attr('title'),
+            name: $(chart).attr('title')
         }],
         categoryAxis: {
             field: "ts",

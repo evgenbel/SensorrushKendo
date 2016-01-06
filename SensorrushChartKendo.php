@@ -51,7 +51,7 @@ class sensorrushChartKendo{
         $id = uniqid();
         $url = $this->getUrl($attr);
         $this->addStyles();
-        $chart = '<div class="charts" id="chart_' . $id . '" url="' . $url . '"></div> <button onclick="refreshKendoChart(\'#chart_' . $id .'\')">Refresh</button>';
+        $chart = '<div class="charts" id="chart_' . $id . '" url="' . $url . '" title="' . $attr['channels'] . '"></div> <button onclick="refreshKendoChart(\'#chart_' . $id .'\')">Refresh</button>';
         return  $chart;
     }
 
