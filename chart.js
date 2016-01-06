@@ -5,7 +5,6 @@
 function refreshKendoChart(chart_element){
     var chart = $(chart_element).data("kendoChart");
     chart.dataSource.read();
-    //chart.refresh();
 }
 
 function createChart(chart) {
