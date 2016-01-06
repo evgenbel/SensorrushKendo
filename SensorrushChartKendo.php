@@ -14,7 +14,6 @@ Author URI:
 
 class sensorrushChartKendo{
     public function __construct() {
-        session_start();
         if (isset($_GET['ajaxurl']))
             add_action('template_redirect', array($this, 'hijackRequests'), -100);
         else
@@ -26,35 +25,33 @@ class sensorrushChartKendo{
     }
 
     protected function writeJsonResponse($status = 200) {
-        $url = $this->getUrl();
+        $url = $_GET['ajaxurl'];
         $data = file_get_contents(/*'http://sensorrush.net/sensorrush/1234/MyPiSenseHAT/Humidity/Read/10/desc'*/$url);
+        /*$data = json_decode($data);
+        foreach($data as $item){
+
+        }*/
         //
         header('content-type: application/json; charset=utf-8', true, $status);
         echo($data);
         exit;
     }
 
-    protected function getUrl(){
+    protected function getUrl($attr){
         return 'http://sensorrush.net/' .
-        $_SESSION['username'] . '/' .
-        $_SESSION['apikey'] . '/' .
-        $_SESSION['sensorname'] . '/' .
-        $_SESSION['channels'] . '/Read/' .
-        $_SESSION['limit'] . '/' .
-        $_SESSION['order'];
+        $attr['username'] . '/' .
+        $attr['apikey'] . '/' .
+        $attr['sensorname'] . '/' .
+        $attr['channels'] . '/Read/' .
+        $attr['limit'] . '/' .
+        $attr['order'];
     }
 
     public function show_chart($attr){
-        $_SESSION['username'] = (isset($attr['username'])?$attr['username']:'sensorrush') ;
-        $_SESSION['apikey'] = (isset($attr['apikey'])?$attr['apikey']:'1234') ;
-        $_SESSION['sensorname'] = (isset($attr['sensorname'])?$attr['sensorname']:'MyPiSenseHAT') ;
-        $_SESSION['channels'] = (isset($attr['channels'])?$attr['channels']:'Humidity') ;
-        $_SESSION['limit'] = (isset($attr['limit'])?$attr['limit']:'10') ;
-        $_SESSION['order'] = (isset($attr['order'])?$attr['order']:'desc') ;
-
-        $url = $this->getUrl();
+        $id = uniqid();
+        $url = $this->getUrl($attr);
         $this->addStyles();
-        $chart = '<div id="chart" url="' . $url . '"></div> <button onclick="refreshKendoChart()">Refresh</button>';
+        $chart = '<div class="charts" id="chart_' . $id . '" url="' . $url . '"></div> <button onclick="refreshKendoChart(\'#chart_' . $id .'\')">Refresh</button>';
         return  $chart;
     }
 
@@ -70,9 +67,9 @@ class sensorrushChartKendo{
         wp_enqueue_style( 'kendo-dataviz' );
         wp_enqueue_style( 'kendo-dataviz-default' );
 
-        wp_enqueue_script( 'jquery-min', 'http://kendo.cdn.telerik.com/2014.2.716/js/jquery.min.js', array(), '20141010', true );
-        wp_enqueue_script( 'kendo-all-min', 'http://kendo.cdn.telerik.com/2014.2.716/js/kendo.all.min.js', array(), '20141010', true );
-        wp_enqueue_script( 'chart', plugins_url('SensorrushChartKendo/chart.js'), array(), '20141010', true );
+        wp_enqueue_script( 'jquery-min', 'http://kendo.cdn.telerik.com/2014.2.716/js/jquery.min.js');
+        wp_enqueue_script( 'kendo-all-min', 'http://kendo.cdn.telerik.com/2014.2.716/js/kendo.all.min.js');
+        wp_enqueue_script( 'chart', plugins_url('SensorrushChartKendo/chart.js'));
     }
 }
 

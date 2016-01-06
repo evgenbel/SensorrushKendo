@@ -2,25 +2,26 @@
  * Created by Evgeniy Belov on 05.01.2016.
  */
 
-function refreshKendoChart(){
-    var chart = $("#chart").data("kendoChart");
-    chart.refresh();
+function refreshKendoChart(chart_element){
+    var chart = $(chart_element).data("kendoChart");
+    chart.dataSource.read();
+    //chart.refresh();
 }
 
-function createChart() {
-    $("#chart").kendoChart({
+function createChart(chart) {
+    $(chart).kendoChart({
         dataSource: {
             transport: {
                 read: {
                     url: location.href,
-                    data: {ajaxurl: 1},
+                    data: {ajaxurl: $(chart).attr('url')},
                     dataType: "json"
                 }
             }
         },
         autoBind: true,
         transitions: true,
-            title: {
+        title: {
             text: "Humidity"
         },
         legend: {
@@ -40,13 +41,14 @@ function createChart() {
             },
             crosshair: {
                 visible: true
-            }
+            },
+            baseUnit: "fit"
         },
         valueAxis: {
             labels: {
                 format: "N0"
             },
-            majorUnit: 100
+            majorUnit: 20
         },
         tooltip: {
             visible: true,
@@ -55,8 +57,11 @@ function createChart() {
         }
     });
 
-    setInterval(refreshKendoChart, 20000);
+    setInterval(function(){refreshKendoChart(chart)}, 20000);
 }
 
-$(document).ready(createChart);
-$(document).bind("kendo:skinChange", createChart);
+$(document).ready(function(){
+    $.each($(".charts"), function(){
+        createChart(this);
+    });
+});
