@@ -20,9 +20,6 @@ function createChart(chart) {
         },
         autoBind: true,
         transitions: true,
-        title: {
-            text: "Humidity"
-        },
         legend: {
             position: "top"
         },
@@ -41,7 +38,8 @@ function createChart(chart) {
             crosshair: {
                 visible: true
             },
-            baseUnit: "fit"
+            baseUnit: "fit",
+			reverse:true
         },
         valueAxis: {
             labels: {
@@ -52,7 +50,7 @@ function createChart(chart) {
         tooltip: {
             visible: true,
             shared: true,
-            format: "N0"
+            format: "N2"
         }
     });
 
