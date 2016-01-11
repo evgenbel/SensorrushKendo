@@ -44,8 +44,7 @@ function createChart(chart) {
         valueAxis: {
             labels: {
                 format: "N0"
-            },
-            majorUnit: 20
+            }
         },
         tooltip: {
             visible: true,
