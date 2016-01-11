@@ -26,14 +26,20 @@ class sensorrushChartKendo{
 
     protected function writeJsonResponse($status = 200) {
         $url = $_GET['ajaxurl'];
-        $data = file_get_contents(/*'http://sensorrush.net/sensorrush/1234/MyPiSenseHAT/Humidity/Read/10/desc'*/$url);
-        /*$data = json_decode($data);
-        foreach($data as $item){
 
-        }*/
-        //
+        $data = file_get_contents(/*'http://sensorrush.net/sensorrush/1234/MyPiSenseHAT/Humidity/Read/10/desc'*/$url);
+
+        $data = json_decode($data);
+        foreach($data as &$item){
+            $val = $item->ts;
+            $val = explode("T", $val);
+            $dt = explode("-", $val[0]);
+
+            $item->ts = $dt[2]."-".$dt[1]."-".$dt[0]." ".substr($val[1],0,8);;
+        }
+
         header('content-type: application/json; charset=utf-8', true, $status);
-        echo($data);
+        echo(json_encode($data));
         exit;
     }
 
