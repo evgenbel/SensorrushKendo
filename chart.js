@@ -8,12 +8,22 @@ function refreshKendoChart(chart_element){
 }
 
 function createChart(chart) {
+    var series = {
+        field: $(chart).attr('yAxis'),
+        name: $(chart).attr('title')
+    };
+    if ($(chart).attr('type')=='scatter'){
+        series = {
+                xField: $(chart).attr('xAxis'),
+                yField: $(chart).attr('yAxis')
+        };
+    }
     $(chart).kendoChart({
         dataSource: {
             transport: {
                 read: {
                     url: location.href,
-                    data: {ajaxurl: $(chart).attr('url')},
+                    data: {ajaxurl: $(chart).attr('url'), type: $(chart).attr('type')},
                     dataType: "json"
                 }
             }
@@ -24,14 +34,11 @@ function createChart(chart) {
             position: "top"
         },
         seriesDefaults: {
-            type: "line"
+            type: $(chart).attr('type')
         },
-        series: [{
-            field: $(chart).attr('title'),
-            name: $(chart).attr('title')
-        }],
+        series: [series],
         categoryAxis: {
-            field: "ts",
+            field: $(chart).attr('xAxis'),
             labels: {
                 rotation: -90
             },

@@ -51,10 +51,13 @@ class sensorrushChartKendo{
     }
 
     public function show_chart($attr){
+        $type = isset($attr['type'])?$attr['type']:'line';
+        $attr['xaxis'] = isset($attr['xaxis'])?$attr['xaxis']:'ts';
+        $attr['yaxis'] = isset($attr['yaxis'])?$attr['yaxis']:$attr['channels'];
         $id = uniqid();
         $url = $this->getUrl($attr);
         $this->addStyles();
-        $chart = '<div class="charts" id="chart_' . $id . '" url="' . $url . '" title="' . $attr['channels'] . '"></div> <button onclick="refreshKendoChart(\'#chart_' . $id .'\')">Refresh</button>';
+        $chart = '<div class="charts" id="chart_' . $id . '" url="' . $url . '" type="'.$type.'" xAxis="'.$attr['xaxis'].'" yAxis="'.$attr['yaxis'].'" title="' . $attr['channels'] . '"></div> <button onclick="refreshKendoChart(\'#chart_' . $id .'\')">Refresh</button>';
         return  $chart;
     }
 
