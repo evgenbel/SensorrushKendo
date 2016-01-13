@@ -6,7 +6,7 @@
 /*
 Plugin Name: SensorrushChartKendo
 Plugin URI: https://github.com/evgenbel/SensorrushChartKendo
-Description: Plugin for view Kendo Chart with data from http://sensorrush.net/{username}/{apikey}/{sensorname}/{channels}/Read/{limit}/{order}. Example: [sensorrush_kendo_chart username=sensorrush sensorname=MyPiSenseHAT apikey=1234 channels=Humidity limit=10 order=desc] - this parameters is default
+Description: Plugin for view Kendo Chart with data from http://sensorrush.net/{username}/{apikey}/{sensorname}/{channels}/Read/{limit}/{order}. Example: [sensorrush_kendo_chart username=sensorrush sensorname=MyPiSenseHAT apikey=1234 channels=Humidity type=line xaxis=ts yaxis=Humidity limit=10 order=desc]
 Author: Evgeniy Belov
 Version: 1.0
 Author URI:
