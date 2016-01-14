@@ -8,17 +8,7 @@ function refreshKendoChart(chart_element){
 }
 
 function createChart(chart) {
-    var series = {
-        field: $(chart).attr('yAxis'),
-        name: $(chart).attr('title')
-    };
-    if ($(chart).attr('type')=='scatter'){
-        series = {
-                xField: $(chart).attr('xAxis'),
-                yField: $(chart).attr('yAxis')
-        };
-    }
-    $(chart).kendoChart({
+    var params = {
         dataSource: {
             transport: {
                 read: {
@@ -36,11 +26,10 @@ function createChart(chart) {
         seriesDefaults: {
             type: $(chart).attr('type')
         },
-        series: [series],
         categoryAxis: {
             field: $(chart).attr('xAxis'),
-			title: {
-      			text:  $(chart).attr('xAxis')
+            title: {
+                text:  $(chart).attr('xAxis')
             },
             labels: {
                 rotation: -90
@@ -49,22 +38,44 @@ function createChart(chart) {
                 visible: true
             },
             baseUnit: "fit",
-			reverse:true
+            reverse:true
         },
         valueAxis: {
             labels: {
                 format: "N0"
             },
-			title: {
-      			text:  $(chart).attr('yAxis')
+            title: {
+                text:  $(chart).attr('yAxis')
             }
         },
         tooltip: {
             visible: true,
             shared: true,
             format: "N2"
-        }
-    });
+        },
+        series:[{
+            field: $(chart).attr('yAxis'),
+            name: $(chart).attr('title')
+        }]
+    };
+
+    if ($(chart).attr('type')=='scatter'){
+        params.series[0] = {
+                xField: $(chart).attr('xAxis'),
+                yField: $(chart).attr('yAxis')
+        };
+        params.xAxis = {
+            title:{
+                text: $(chart).attr('xAxis')
+            }
+        };
+        params.yAxis = {
+            title:{
+                text: $(chart).attr('yAxis')
+            }
+        };
+    }
+    $(chart).kendoChart(params);
 
     setInterval(function(){refreshKendoChart(chart)}, 20000);
 }
