@@ -39,6 +39,9 @@ function createChart(chart) {
         series: [series],
         categoryAxis: {
             field: $(chart).attr('xAxis'),
+			title: {
+      			text:  $(chart).attr('xAxis')
+            },
             labels: {
                 rotation: -90
             },
@@ -51,6 +54,9 @@ function createChart(chart) {
         valueAxis: {
             labels: {
                 format: "N0"
+            },
+			title: {
+      			text:  $(chart).attr('yAxis')
             }
         },
         tooltip: {
